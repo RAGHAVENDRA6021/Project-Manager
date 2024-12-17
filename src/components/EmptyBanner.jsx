@@ -5,7 +5,7 @@ const EmptyBanner = ({openProjectCreater}) => {
   return (
     <div className='w-full flex flex-col gap-3 items-center'>
         <div>
-        <img src={Logo} className='h-20 w-20'/>
+        <img src={Logo} className="w-16 h-16 object-contain mx-auto" />
         </div>
         <div className='text-blue-400   '>No Project Selected</div>
         <div>select a project or get started with a new one</div>

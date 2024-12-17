@@ -8,12 +8,12 @@ function App() {
   const [showEmpty, setShowEmpty] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
   const [allProjects,setAllProjects] = useState([])
-
+  
   useEffect(()=>{
-    setSelectedProject((project)=>allProjects.find((proj)=>proj.id===project.id)) 
+    if(!selectedProject) return;
+    setSelectedProject((project)=>({...allProjects.find((proj)=>proj.id===project.id)})) 
   },[allProjects])
   
-
   const openProjectCreater = () => {
     setShowEmpty(false);
   };
@@ -27,6 +27,7 @@ function App() {
   const openProject =(projectId)=>{
     setShowEmpty(()=>false);
     setSelectedProject(()=>{
+      
       const project = allProjects.find((p)=>p.id===projectId)
       return project;
     });
@@ -37,9 +38,18 @@ function App() {
     setAllProjects((previousProjects)=>{
       const previousProjectsCopy = JSON.parse(JSON.stringify(previousProjects));
       let project = previousProjectsCopy.find((proj)=>proj.id===selectedProject.id);
-      project={...project,tasks:[...updatedTasks]};
+      project.tasks=[...updatedTasks];
       return previousProjectsCopy
   })
+  }
+
+  const deleteTask=(id)=>{
+    setAllProjects((previousProjects)=>{
+      
+      return previousProjects.filter((project)=>project.id!==id)
+  })
+  setShowEmpty(true);
+  setSelectedProject(null)
   }
 
   return (
@@ -54,7 +64,7 @@ function App() {
           ) : !selectedProject ? (
             <ProjectCreater saveProjectDetails={saveProjectDetails}/>
           ) : (
-            <CreatedProject selectedProject={selectedProject} taskHandler={taskHandler}/>
+            <CreatedProject selectedProject={selectedProject} taskHandler={taskHandler} deleteTask={deleteTask}/>
           )}
         </div>
       </div>

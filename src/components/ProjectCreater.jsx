@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 
-const defaultProjectDetails = {
-  id: new Date().toLocaleTimeString(),
-  title: "",
-  description: "",
-  date: '',
-  tasks:[]
-};
+
 
 const ProjectCreater = ({ saveProjectDetails }) => {
+  const defaultProjectDetails = {
+    id: new Date().toLocaleTimeString(),
+    title: "",
+    description: "",
+    date: '',
+    tasks:[]
+  };
   const [projectDetails, setProjectDetails] = useState(defaultProjectDetails);
 
   const handleProjectDetails = (key, value) => {
@@ -23,9 +24,12 @@ const ProjectCreater = ({ saveProjectDetails }) => {
     setProjectDetails((prev) => defaultProjectDetails);
     saveProjectDetails({ ...projectDetails });
   };
+
+  const inputClass= "w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"
+  const labelClass= "text-sm font-bold uppercase text-stone-500"
   return (
     <div className="flex flex-col gap-4 p-6">
-      <form className="text-xl" onSubmit={onSave}>
+      <form className="mt-4"onSubmit={onSave}>
         <div className="flex justify-end gap-4">
           <button className="p-2 rounded hover:bg-black hover:text-white">
             {" "}
@@ -39,19 +43,19 @@ const ProjectCreater = ({ saveProjectDetails }) => {
           </button>
         </div>
         <div className="flex flex-col gap-2">
-          <label>Title {JSON.stringify(projectDetails)}</label>
+          <label className={labelClass}>Title</label>
           <input
             type="text"
-            className="rounded p-1"
+            className={inputClass}
             value={projectDetails["title"]}
             onChange={(e) => handleProjectDetails("title", e.target.value)}
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label>Description</label>
+          <label className={labelClass}>Description</label>
           <input
             type="text"
-            className="rounded p-1"
+            className={inputClass}
             value={projectDetails["description"]}
             onChange={(e) =>
               handleProjectDetails("description", e.target.value)
@@ -59,10 +63,10 @@ const ProjectCreater = ({ saveProjectDetails }) => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label>Due Date</label>
+          <label className={labelClass}>Due Date</label>
           <input
             type="date"
-            className="rounded p-1"
+            className={inputClass}
             value={projectDetails["date"]}
             onChange={(e) => handleProjectDetails("date", e.target.value)}
           />
